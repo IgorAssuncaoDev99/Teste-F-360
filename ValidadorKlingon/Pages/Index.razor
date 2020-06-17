@@ -1,0 +1,47 @@
+﻿@page "/"
+
+<h1>Teste F 360</h1>
+<div>
+    <p>
+        Preposições:@qtdPreoposicoes<br />
+        Verbos: @qtdVerbo<br />
+        Verbos Primeira Pessoa : @qtdVerboPP<br />
+    </p>
+</div>
+
+@code  {
+
+    string[] letrasFoo = "s l f w k".Split();
+  
+    string[] textoB = System.IO.File.ReadAllText("wwwroot/klingon-textoB.txt").Split(' ');
+
+    int qtdPreoposicoes;
+    int qtdVerbo;
+    int qtdVerboPP;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+
+        foreach (var txt in textoB)
+        {
+            if (txt.Length == 3 && !txt.Contains('d') && !letrasFoo.Any(x => txt.EndsWith(x)))
+            {
+                qtdPreoposicoes++;
+            }
+
+            else if (txt.Length >= 8 && letrasFoo.Any(x => txt.EndsWith(x)))
+            {
+                qtdVerbo++;
+
+                if (!letrasFoo.Any(x => txt.StartsWith(x)))
+                    qtdVerboPP++;
+            }
+            
+
+
+        }
+
+    }
+}
